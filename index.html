@@ -1,39 +1,41 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-</head>
-<body>
+  <head>
+    <title>Google Sign-In</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
 
-<button class="gsi-material-button">
-  <!-- ton SVG et texte ici -->
-  <div class="gsi-material-button-state"></div>
-  <div class="gsi-material-button-content-wrapper">
-    <div class="gsi-material-button-icon">
-      <!-- SVG Google -->
-    </div>
-    <span class="gsi-material-button-contents">Continue with Google</span>
-  </div>
-</button>
+    <!-- Ton propre bouton custom -->
+    <button id="myGoogleBtn" class="gsi-material-button">
+      <div class="gsi-material-button-state"></div>
+      <div class="gsi-material-button-content-wrapper">
+        <div class="gsi-material-button-icon">
+          <!-- SVG Google ici -->
+          <img src="https://developers.google.com/identity/images/g-logo.png" style="width:20px;height:20px;">
+        </div>
+        <span class="gsi-material-button-contents">Continue with Google</span>
+      </div>
+    </button>
 
-<script>
-  function handleCredentialResponse(response) {
-    console.log("Encoded JWT ID token: " + response.credential);
-    // Exemple : envoyer ce token à ton backend pour authentifier l'utilisateur
-  }
+    <script>
+      function handleCredentialResponse(response) {
+        console.log("Token JWT Google :", response.credential);
+        // Tu peux envoyer le token au serveur ici
+      }
 
-  window.onload = function () {
-    google.accounts.id.initialize({
-      client_id: '771271933453-7b05smqssd08ersoov0qkph1t88gqeaj.apps.googleusercontent.com',
-      callback: handleCredentialResponse,
-    });
+      window.onload = function () {
+        google.accounts.id.initialize({
+          client_id: "TON_CLIENT_ID_GOOGLE.apps.googleusercontent.com",
+          callback: handleCredentialResponse,
+        });
 
-    const button = document.querySelector('.gsi-material-button');
-    button.addEventListener('click', () => {
-      google.accounts.id.prompt();
-    });
-  };
-</script>
-
-</body>
+        // Clic sur TON bouton → affiche le One Tap ou popup
+        document.getElementById("myGoogleBtn").addEventListener("click", () => {
+          google.accounts.id.prompt();
+        });
+      };
+    </script>
+  </body>
 </html>
