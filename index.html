@@ -1,0 +1,39 @@
+<html>
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+<button class="gsi-material-button">
+  <!-- ton SVG et texte ici -->
+  <div class="gsi-material-button-state"></div>
+  <div class="gsi-material-button-content-wrapper">
+    <div class="gsi-material-button-icon">
+      <!-- SVG Google -->
+    </div>
+    <span class="gsi-material-button-contents">Continue with Google</span>
+  </div>
+</button>
+
+<script>
+  function handleCredentialResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+    // Exemple : envoyer ce token à ton backend pour authentifier l'utilisateur
+  }
+
+  window.onload = function () {
+    google.accounts.id.initialize({
+      client_id: '771271933453-7b05smqssd08ersoov0qkph1t88gqeaj.apps.googleusercontent.com',
+      callback: handleCredentialResponse,
+    });
+
+    const button = document.querySelector('.gsi-material-button');
+    button.addEventListener('click', () => {
+      google.accounts.id.prompt();
+    });
+  };
+</script>
+
+</body>
+</html>
